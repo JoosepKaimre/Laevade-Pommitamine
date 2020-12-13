@@ -94,13 +94,8 @@ def laud_koos_laevadega(suurus):
     for laev in laevad:
         while True:
             suunad = []
-            
             rida = randint(0,suurus-1)
             veerg = randint(0,suurus-1)
-            
-            #print(rida)
-            #print(veerg)
-            
             if laev-1 <=rida:
                 suunad.append("N")
             if rida <= suurus-laev:
@@ -112,6 +107,16 @@ def laud_koos_laevadega(suurus):
             if lisa_laev(laev, choice(suunad), rida, veerg, laud):
                 break
     return laud
+
+
+def pommitamata_kohad(laud):
+    tulem = []
+    for i in range(len(laud)):
+        for j in range(len(laud)):
+            if laud[i][j] == " ":
+                tulem.add((i,j))
+    return tulem
+            
         
         
         
