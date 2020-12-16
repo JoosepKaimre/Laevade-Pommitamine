@@ -35,7 +35,7 @@ def pommita(rida, veerg, laud):
         print("Laual pole selliseid kohti")
         return -1
 
-def lisa_laev(suurus, suund, rida, veerg, laud):
+def lisa_laev(suurus, suund, rida, veerg, laud, teated=True):
     # suurus - laeva suurus
     # suund (N,W,E,S) - kuhu laev jääb stardiruutust
     # rida - stardiruudu reanumber
@@ -44,23 +44,32 @@ def lisa_laev(suurus, suund, rida, veerg, laud):
     try:
         for i in range(suurus):
             if suund == "N":
+                if (rida+1-suurus) <0:
+                    raise Exception
                 if laud[rida-i][veerg] != " ":
-                    print("Need laeva kohad on juba võetud")
+                    if teated:
+                        print("Need laeva kohad on juba võetud")
                     return False
             elif suund =="E":
                 if laud[rida][veerg+i] != " ":
-                    print("Need laeva kohad on juba võetud")
+                    if teated:
+                        print("Need laeva kohad on juba võetud")
                     return False
             elif suund =="S":
                 if laud[rida+i][veerg] != " ":
-                    print("Need laeva kohad on juba võetud")
+                    if teated:
+                        print("Need laeva kohad on juba võetud")
                     return False
             elif suund == "W":
+                if (veerg+1-suurus) <0:
+                    raise Exception
                 if laud[rida][veerg-i] != " ":
-                    print("Need laeva kohad on juba võetud")
+                    if teated:
+                        print("Need laeva kohad on juba võetud")
                     return False
             else:
-                print("Sellist suunda ei saa olla")
+                if teated:
+                    print("Sellist suunda ei saa olla")
                 return False
         for i in range(suurus):
             if suund == "N":
@@ -73,12 +82,14 @@ def lisa_laev(suurus, suund, rida, veerg, laud):
             elif suund == "W":
                 laud[rida][veerg-i] = "O"
             else:
-                print("Sellist suunda ei saa olla")
+                if teated:
+                    print("Sellist suunda ei saa olla")
                 return False
         return True
             
     except:
-        print("Laev jääb lauast välja")
+        if teated:
+            print("Laev jääb lauast välja")
         return False
     
 def mäng_läbi(laud):
@@ -88,9 +99,8 @@ def mäng_läbi(laud):
                 return False
     return True
 
-def laud_koos_laevadega(suurus):
+def laud_koos_laevadega(suurus, laevad):
     laud = loo_laud(suurus)
-    laevad = [5,4,3,3,2]
     for laev in laevad:
         while True:
             suunad = []
@@ -104,7 +114,7 @@ def laud_koos_laevadega(suurus):
                 suunad.append("W")
             if veerg <= suurus-laev:
                 suunad.append("E")
-            if lisa_laev(laev, choice(suunad), rida, veerg, laud):
+            if lisa_laev(laev, choice(suunad), rida, veerg, laud, False):
                 break
     return laud
 
