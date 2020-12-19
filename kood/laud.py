@@ -5,13 +5,16 @@
 
 from random import randint, choice
 
+
+# Erinevate laevade pommitamisega seotud vigade jaoks (võib ka uude faili tõsta)
+class LaevadePommitamiseException(Exception):
+    pass
+
+
+# Tagastab etteantud suuruse järgi ruudukujulise tühja laua
 def loo_laud(suurus):
-    # võtab sisse laua suuruse argumendina
-    # loob tühja laua.
-    tulemus = []
-    for i in range(suurus):
-        tulemus.append(suurus*[" "])
-    return tulemus
+    return [suurus * [" "]] * suurus
+
 
 def pommita(rida, veerg, laud):
     # rida - rea number
@@ -30,40 +33,40 @@ def pommita(rida, veerg, laud):
         else:
             print("Seda kohta on juba pommitatud")
             return -1
-        
-    except:
+    except LaevadePommitamiseException:
         print("Laual pole selliseid kohti")
         return -1
 
+
 def lisa_laev(suurus, suund, rida, veerg, laud, teated=True):
     # suurus - laeva suurus
-    # suund (N,W,E,S) - kuhu laev jääb stardiruutust
+    # suund (N, E, S, W) - kuhu laev jääb stardiruudust
     # rida - stardiruudu reanumber
     # veerg - stardiruudu veerunumber
     # laud
     try:
         for i in range(suurus):
             if suund == "N":
-                if (rida+1-suurus) <0:
-                    raise Exception
-                if laud[rida-i][veerg] != " ":
+                if (rida + 1 - suurus) < 0:
+                    raise LaevadePommitamiseException
+                if laud[rida - i][veerg] != " ":
                     if teated:
                         print("Need laeva kohad on juba võetud")
                     return False
-            elif suund =="E":
-                if laud[rida][veerg+i] != " ":
+            elif suund == "E":
+                if laud[rida][veerg + i] != " ":
                     if teated:
                         print("Need laeva kohad on juba võetud")
                     return False
-            elif suund =="S":
-                if laud[rida+i][veerg] != " ":
+            elif suund == "S":
+                if laud[rida + i][veerg] != " ":
                     if teated:
                         print("Need laeva kohad on juba võetud")
                     return False
             elif suund == "W":
-                if (veerg+1-suurus) <0:
-                    raise Exception
-                if laud[rida][veerg-i] != " ":
+                if (veerg + 1 - suurus) < 0:
+                    raise LaevadePommitamiseException
+                if laud[rida][veerg - i] != " ":
                     if teated:
                         print("Need laeva kohad on juba võetud")
                     return False
@@ -73,61 +76,49 @@ def lisa_laev(suurus, suund, rida, veerg, laud, teated=True):
                 return False
         for i in range(suurus):
             if suund == "N":
-                laud[rida-i][veerg] = "O"
-                
-            elif suund =="E":
-                laud[rida][veerg+i] = "O"
-            elif suund =="S":
-                laud[rida+i][veerg] = "O"
+                laud[rida - i][veerg] = "O"
+            elif suund == "E":
+                laud[rida][veerg + i] = "O"
+            elif suund == "S":
+                laud[rida + i][veerg] = "O"
             elif suund == "W":
-                laud[rida][veerg-i] = "O"
+                laud[rida][veerg - i] = "O"
             else:
                 if teated:
                     print("Sellist suunda ei saa olla")
                 return False
         return True
-            
-    except:
+    except LaevadePommitamiseException:
         if teated:
             print("Laev jääb lauast välja")
         return False
-    
+
+
+# Tagastab False, kui laual leidub veel laevu, vastasel juhul tagastab True
 def mäng_läbi(laud):
-    for rida in laud:
-        for ruut in rida:
-            if ruut == "O":
-                return False
-    return True
+    return False if any("O" in rida for rida in laud) else True
+
 
 def laud_koos_laevadega(suurus, laevad):
     laud = loo_laud(suurus)
     for laev in laevad:
         while True:
             suunad = []
-            rida = randint(0,suurus-1)
-            veerg = randint(0,suurus-1)
-            if laev-1 <=rida:
+            rida = randint(0, suurus - 1)
+            veerg = randint(0, suurus - 1)
+            if laev - 1 <= rida:
                 suunad.append("N")
-            if rida <= suurus-laev:
+            if rida <= suurus - laev:
                 suunad.append("S")
-            if laev-1 <= veerg:
+            if laev - 1 <= veerg:
                 suunad.append("W")
-            if veerg <= suurus-laev:
+            if veerg <= suurus - laev:
                 suunad.append("E")
             if lisa_laev(laev, choice(suunad), rida, veerg, laud, False):
                 break
     return laud
 
 
+# Tagastab listi koordinaatide paaridest, millele vastavaid ruute pole veel pommitatud
 def pommitamata_kohad(laud):
-    tulem = []
-    for i in range(len(laud)):
-        for j in range(len(laud)):
-            if laud[i][j] == " ":
-                tulem.add((i,j))
-    return tulem
-            
-        
-        
-        
-    
+    return [(x, y) for x in range(len(laud)) for y in range(len(laud[x])) if laud[x][y] == " "]
