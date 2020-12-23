@@ -102,12 +102,12 @@ def joonistaAlgsedLauad():
 
     # Esimesele lauale numbrite lisamine
     for i in range(10):
-        textsurface = myfont.render(str(i + 1), True, (0, 0, 0))
+        textsurface = myfont.render(str(i), True, (0, 0, 0))
         ekraan.blit(textsurface, (i * 50 + 85 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
 
     # Teisele lauale numbrite lisamine
     for i in range(10):
-        textsurface = myfont.render(str(i + 1), True, (0, 0, 0))
+        textsurface = myfont.render(str(i), True, (0, 0, 0))
         ekraan.blit(textsurface, (i * 50 + 645 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
 
 def uuendaKasutajaLauda(kasutaja_lauaseis):
@@ -129,7 +129,6 @@ def uuendaKasutajaLauda(kasutaja_lauaseis):
                 color = blue
             pygame.draw.rect(ekraan, color, (i * 50 + 620, j * 50 + 100, 50, 50), 0)
             pygame.draw.rect(ekraan, white, (i * 50 + 620, j * 50 + 100, 50, 50), 1)
-
     pygame.display.update()
 
 def uuendaVastaseLauda(vastase_lauaseis):
@@ -149,7 +148,6 @@ def uuendaVastaseLauda(vastase_lauaseis):
                 color = blue
             pygame.draw.rect(ekraan, color, (i * 50 + 60, j * 50 + 100, 50, 50), 0)
             pygame.draw.rect(ekraan, white, (i * 50 + 60, j * 50 + 100, 50, 50), 1)
-
     pygame.display.update()
 
 
@@ -167,7 +165,10 @@ def mäng():
 
     joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
 
-    kasutaja_lauaseis = mangu_meetodid.kasutaja_laevade_lisamine(kasutaja_lauaseis, laevad)
+    for laev in laevad:
+        kasutaja_lauaseis = mangu_meetodid.kasutaja_laeva_lisamine(kasutaja_lauaseis, laev)
+        #uuendaKasutajaLauda(kasutaja_lauaseis)
+        joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
 
     while True:
         for event in pygame.event.get():
