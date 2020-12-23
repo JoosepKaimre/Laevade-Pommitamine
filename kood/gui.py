@@ -1,4 +1,6 @@
 import pygame
+import laud as laua_meetodid
+import mäng as mangu_meetodid
 
 # ~~~~~~~~~~~~~[suurused]~~~~~~~~~~~~~~~#
 ekraaniLaius = 1180
@@ -72,9 +74,70 @@ def menüü():
 
         pygame.display.update()
 
+def joonistaAlgsedLauad():
+    pygame.font.init()
+    myfont = pygame.font.SysFont(pygame.font.get_default_font(), 30)
+
+    ekraan.fill(white)
+
+    laud1 = pygame.draw.rect(ekraan, pas, (60, 100, 500, 500))
+    textsurface = myfont.render("Vastase laud", True, (0, 0, 0))
+    ekraan.blit(textsurface, (70, 25))
+
+    laud2 = pygame.draw.rect(ekraan, pas, (620, 100, 500, 500))
+    textsurface = myfont.render("Sinu laud", True, (0, 0, 0))
+    ekraan.blit(textsurface, (630, 25))
+
+    tahed = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+
+    # Esimesele lauale tähtede lisamine
+    for i in range(10):
+        textsurface = myfont.render(tahed[i], True, (0, 0, 0))
+        ekraan.blit(textsurface, (35 - textsurface.get_width() / 2, i * 50 + 125 - textsurface.get_height() / 2))
+
+    # Teisele lauale tähtede lisamine
+    for i in range(10):
+        textsurface = myfont.render(tahed[i], True, (0, 0, 0))
+        ekraan.blit(textsurface, (595 - textsurface.get_width() / 2, i * 50 + 125 - textsurface.get_height() / 2))
+
+    # Esimesele lauale numbrite lisamine
+    for i in range(10):
+        textsurface = myfont.render(str(i + 1), True, (0, 0, 0))
+        ekraan.blit(textsurface, (i * 50 + 85 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
+
+    # Teisele lauale numbrite lisamine
+    for i in range(10):
+        textsurface = myfont.render(str(i + 1), True, (0, 0, 0))
+        ekraan.blit(textsurface, (i * 50 + 645 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
+
+def joonistalauad(vastase_lauaseis, kasutaja_lauaseis):
+    pygame.font.init()
+    myfont = pygame.font.SysFont(pygame.font.get_default_font(), 30)
+
+    # Esimesele lauale ruutude joonistamine
+    for i in range(10):
+        for j in range(10):
+            pygame.draw.rect(ekraan, blue, (i * 50 + 60, j * 50 + 100, 50, 50), 0)
+            pygame.draw.rect(ekraan, akt, (i * 50 + 60, j * 50 + 100, 50, 50), 1)
+
+    # Teisele lauale ruutude joonistamine
+    for i in range(10):
+        for j in range(10):
+            pygame.draw.rect(ekraan, blue, (i * 50 + 620, j * 50 + 100, 50, 50), 0)
+            pygame.draw.rect(ekraan, akt, (i * 50 + 620, j * 50 + 100, 50, 50), 1)
+
+    pygame.display.update()
 
 def mäng():
-    tahed = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+    laevad = [5, 4, 3, 3, 2]
+
+    joonistaAlgsedLauad()
+
+    vastase_lauaseis = laua_meetodid.loo_laud(10)
+    kasutaja_lauaseis = laua_meetodid.loo_laud(10)
+    joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
+
+    # kasutaja_lauaseis = mangu_meetodid.kasutaja_laevade_lisamine(kasutaja_lauaseis, laevad)
 
     while True:
         for event in pygame.event.get():
@@ -82,50 +145,9 @@ def mäng():
                 pygame.quit()
                 quit()
 
-        ekraan.fill(white)
-
-        laud1 = pygame.draw.rect(ekraan, pas, (60, 100, 500, 500))
-        laud2 = pygame.draw.rect(ekraan, pas, (620, 100, 500, 500))
-
-        pygame.font.init()  # you have to call this at the start,
-        # if you want to use this module.
-        myfont = pygame.font.SysFont(pygame.font.get_default_font(), 30)
-
-        # Esimesele lauale tähtede lisamine
-        for i in range(10):
-            textsurface = myfont.render(tahed[i], True, (0, 0, 0))
-            ekraan.blit(textsurface, (35 - textsurface.get_width() / 2, i*50 + 125 - textsurface.get_height() / 2))
-
-        # Teisele lauale tähtede lisamine
-        for i in range(10):
-            textsurface = myfont.render(tahed[i], True, (0, 0, 0))
-            ekraan.blit(textsurface, (595 - textsurface.get_width() / 2, i*50 + 125 - textsurface.get_height() / 2))
-
-        # Esimesele lauale numbrite lisamine
-        for i in range(10):
-            textsurface = myfont.render(str(i+1), True, (0, 0, 0))
-            ekraan.blit(textsurface, (i*50 + 85 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
-
-        # Teisele lauale numbrite lisamine
-        for i in range(10):
-            textsurface = myfont.render(str(i + 1), True, (0, 0, 0))
-            ekraan.blit(textsurface, (i*50 + 645 - textsurface.get_width() / 2, 75 - textsurface.get_height() / 2))
+        joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
 
 
-
-        # Esimesele lauale ruutude joonistamine
-        for i in range(10):
-            for j in range(10):
-                pygame.draw.rect(ekraan, blue, (i*50+60,j*50+100,50,50),0)
-                pygame.draw.rect(ekraan, akt, (i*50+60,j*50+100,50,50),1)
-
-        # Teisele lauale ruutude joonistamine
-        for i in range(10):
-            for j in range(10):
-                pygame.draw.rect(ekraan, blue, (i * 50 + 620, j * 50 + 100, 50, 50),0)
-                pygame.draw.rect(ekraan, akt, (i * 50 + 620, j * 50 + 100, 50, 50),1)
-
-        pygame.display.update()
 
 
 mäng()

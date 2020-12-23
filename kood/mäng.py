@@ -42,6 +42,7 @@ def kasutaja_laevade_lisamine(laud, laevad):
             veerg = -1
     print("Lõplik laud on selline")
     väljasta_laud(laud)
+    #return laud
 
 
 def mängu_mängimine(laud1, laud2):
