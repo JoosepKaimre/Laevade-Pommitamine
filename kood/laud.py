@@ -4,6 +4,7 @@
 # "X" tähistab pommitatud laeva ruutu
 
 from random import randint, choice
+import copy
 
 
 # Erinevate laevade pommitamisega seotud vigade jaoks (võib ka uude faili tõsta)
@@ -13,7 +14,10 @@ class LaevadePommitamiseException(Exception):
 
 # Tagastab etteantud suuruse järgi ruudukujulise tühja laua
 def loo_laud(suurus):
-    return [suurus * [" "]] * suurus
+    laud = []
+    for i in range(suurus):
+        laud.append(copy.deepcopy(suurus*[" "]))
+    return laud
 
 
 def pommita(rida, veerg, laud):
