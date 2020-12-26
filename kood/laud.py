@@ -16,7 +16,7 @@ class LaevadePommitamiseException(Exception):
 def loo_laud(suurus):
     laud = []
     for i in range(suurus):
-        laud.append(copy.deepcopy(suurus*[" "]))
+        laud.append(copy.deepcopy(suurus * [" "]))
     return laud
 
 

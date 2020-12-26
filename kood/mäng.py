@@ -17,6 +17,7 @@ def mäng():
     # laud2_info = laua_meetodid.loo_laud(suurus)
     kasutaja_laevade_lisamine(laud2_mängija, laevad)
 
+
 def kasutaja_laeva_lisamine(laud, laev):
     global suurus
     suund = ""
