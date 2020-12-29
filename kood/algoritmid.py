@@ -66,13 +66,30 @@ def hunt_paarsus_algoritm(laud):
         tulem, laud = paarsus_käik(laud)
         if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
+        return tulem, laud
             
 def paarsus_käik(laud):
     #todo
+    rida = -1
+    veerg = -1
     for i in range(len(laud)):
         for j in range(len(laud)):
-            # siin tuleb teha kontroll, et kõik külgedel olevad ruudud on pommitamata
-            return (0,0),laud
-            
+            if laud[i][j] == "-" or laud[i][j] == "X":
+                continue
+            else:
+                rida = i
+                veerg = j
+            # kui kuskil küljel on pommitatud ruut, siis ta ei vali seda randomiks
+            if i > 0 and (laud[i-1][j] == '-' or laud[i-1][j] == 'X'):
+                continue
+            if i < len(laud) and (laud[i+1][j] == '-' or laud[i+1][j] == 'X'):
+                continue
+            if j > 0 and (laud[i][j-1] == '-' or laud[i][j-1] == 'X'):
+                continue
+            if j < len(laud) and (laud[i][j+1] == '-' or laud[i][j+1] == 'X'):
+                continue
+            return laua_meetodid.pommita(i,j,laud)
+    # kui ei leidu ruutu, millel poleks mingi naaber pommitamata, siis pommitame viimase vaba ruudu
+    return laua_meetodid.pommita(rida,veerg,laud)
             
         
