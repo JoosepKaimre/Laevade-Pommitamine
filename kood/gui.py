@@ -4,6 +4,7 @@ import time
 import pygame
 import laud as laua_meetodid
 import mäng as mangu_meetodid
+import algoritmid
 
 # ~~~~~~~~~~~~~[suurused]~~~~~~~~~~~~~~~#
 ekraaniLaius = 1180
@@ -199,11 +200,11 @@ def mäng(algoritm):
         ############################
         # Mängijalt käigu küsimine #
         ############################
-        pommitamise_tulemus = 1
-        # Küsime kasutaja käiku korduvalt kui ta sai pihta
-        while pommitamise_tulemus == 1:
+        kasutaja_pommitamise_tulemus = 1
+        # Laseme kasutajal korduvalt käike teha kui ta sai AI laevadele pihta
+        while kasutaja_pommitamise_tulemus == 1:
             pygame.event.get()
-            pommitamise_tulemus, vastase_lauaseis = laua_meetodid.kasutaja_pommitamine(vastase_lauaseis)
+            kasutaja_pommitamise_tulemus, vastase_lauaseis = laua_meetodid.kasutaja_pommitamine(vastase_lauaseis)
             uuendaVastaseLauda(vastase_lauaseis)
             pygame.event.get()
         if laua_meetodid.mäng_läbi(vastase_lauaseis):
@@ -214,12 +215,18 @@ def mäng(algoritm):
         #####################
         # AI käigu tegemine #
         #####################
-        print("Vastase käik")
-        # kasutaja_lauaseis = AIKäik()
-        uuendaKasutajaLauda(kasutaja_lauaseis)
+        print("*** Vastane alustab käiguga ***")
+        vastase_pommitamise_tulemus = 1
+        # Laseme AI-l korduvalt käike teha kui ta sai kasutaja laevadele pihta
+        while vastase_pommitamise_tulemus == 1:
+            pygame.event.get()
+            vastase_pommitamise_tulemus, kasutaja_lauaseis = algoritm(kasutaja_lauaseis)
+            uuendaKasutajaLauda(kasutaja_lauaseis)
+            pygame.event.get()
+        print("*** Vastane lõpetab käiguga ***")
         if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
             print("Vastase võit!")
             return
 
 
-mäng("a")
+mäng(algoritmid.random_käik)
