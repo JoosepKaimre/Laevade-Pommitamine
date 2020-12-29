@@ -91,7 +91,8 @@ def paarsus_käik(laud):
             return laua_meetodid.pommita(i,j,laud)
     # kui ei leidu ruutu, millel poleks mingi naaber pommitamata, siis pommitame viimase vaba ruudu
     return laua_meetodid.pommita(rida,veerg,laud)
-            
+
+
 def hunt_tõenäosuslik(laud):
     global targad_käigud
     global viimati_pommitatud
@@ -107,6 +108,7 @@ def hunt_tõenäosuslik(laud):
         if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
         return tulem, laud
+
 
 
 def tõenäosuslik(laud):
@@ -136,13 +138,13 @@ def tõenäosuslik(laud):
     
 def tühjuse_kontroll_rida(rida,veerg,laev,laud):
     for i in range(laev):
-        if (laud[rida][veerg+i] == "-" or laud[rida][veerg+i] == "X"):
+        if (laud[rida][veerg+i] == "-"):
             return False
     return True
 
 def tühjuse_kontroll_veerg(rida,veerg,laev,laud):
     for i in range(laev):
-        if (laud[rida+i][veerg] == "-" or laud[rida+i][veerg] == "X"):
+        if (laud[rida+i][veerg] == "-"):
             return False
     return True
                     
