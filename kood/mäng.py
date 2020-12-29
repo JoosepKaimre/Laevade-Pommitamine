@@ -6,18 +6,6 @@ suurus = 10
 laevad = [5, 4, 3, 3, 2]
 
 
-def mäng():
-    global suurus
-    global laevad
-    # todo - tuleb mõelda, kuidas me kasutajale näitame, mida tema teab.
-    laud1_mängija = laua_meetodid.laud_koos_laevadega(suurus, laevad)
-    # laud1_info = laua_meetodid.loo_laud(suurus)
-
-    laud2_mängija = laua_meetodid.loo_laud(suurus)
-    # laud2_info = laua_meetodid.loo_laud(suurus)
-    kasutaja_laevade_lisamine(laud2_mängija, laevad)
-
-
 def kasutaja_laeva_lisamine(laud, laev):
     global suurus
     suund = ""
@@ -74,13 +62,6 @@ def kasutaja_laevade_lisamine(laud, laevad):
     return laud
 
 
-def mängu_mängimine(laud1, laud2):
-    # kasutaja sisend ja arvuti käik
-    return
-
-
-
-
 def väljasta_laud(laud):
     print(" ", end=" ")
     for i in range(suurus):
@@ -94,8 +75,3 @@ def väljasta_laud(laud):
             print(ruut, end="\t")
         # print()
         print()
-
-
-def algoritm():
-    # todo
-    return

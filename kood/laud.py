@@ -4,6 +4,7 @@
 # "X" tähistab pommitatud laeva ruutu
 
 from random import randint, choice
+import pygame
 import copy
 
 
@@ -18,28 +19,6 @@ def loo_laud(suurus):
     for i in range(suurus):
         laud.append(copy.deepcopy(suurus * [" "]))
     return laud
-
-
-def pommita(rida, veerg, laud):
-    # rida - rea number
-    # veerg - veeru number
-    # laud - mänguload
-    try:
-        sümbol = laud[rida][veerg]
-        if sümbol == " ":
-            laud[rida][veerg] = "-"
-            print("Seal ruudul ei olnud laeva")
-            return 0
-        elif sümbol == "O":
-            print("Tabati laeva")
-            laud[rida][veerg] = "X"
-            return 1
-        else:
-            print("Seda kohta on juba pommitatud")
-            return -1
-    except LaevadePommitamiseException:
-        print("Laual pole selliseid kohti")
-        return -1
 
 
 def lisa_laev(suurus, suund, rida, veerg, laud, teated=True):
@@ -126,3 +105,43 @@ def laud_koos_laevadega(suurus, laevad):
 # Tagastab listi koordinaatide paaridest, millele vastavaid ruute pole veel pommitatud
 def pommitamata_kohad(laud):
     return [(x, y) for x in range(len(laud)) for y in range(len(laud[x])) if laud[x][y] == " "]
+
+
+# Etteantud ruudu pommitamise meetod mängija ja AI jaoks
+def pommita(rida, veerg, laud):
+    # rida - rea number
+    # veerg - veeru number
+    # laud - mängulaud
+    try:
+        sümbol = laud[rida][veerg]
+        if sümbol == " ":
+            laud[rida][veerg] = "-"
+            print("Seal ruudul ei olnud laeva")
+            return 0, laud
+        elif sümbol == "O":
+            print("Tabati laeva")
+            laud[rida][veerg] = "X"
+            return 1, laud
+        else:
+            print("Seda kohta on juba pommitatud! Proovige uuesti...")
+            return -1, laud
+    except LaevadePommitamiseException:
+        print("Laual pole selliseid kohti")
+        return -1, laud
+
+
+def kasutaja_pommitamine(laud):
+    tahed = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+    while True:
+        rida = -1
+        veerg = -1
+        while rida not in range(10) or veerg not in range(10):
+            tulemus = input("Sisesta palun pommitatav ruut (kujul A0, A1 jne): ")
+            try:
+                rida = tahed.index(tulemus[0].upper())
+                veerg = int(tulemus[1])
+            except:
+                print("Sisestasite ruudu koordinaadid valel kujul! Proovige uuesti...")
+        pommitamise_tulemus, lauaseis = pommita(rida, veerg, laud)
+        if pommitamise_tulemus == 1 or pommitamise_tulemus == 0:
+            return pommitamise_tulemus, lauaseis

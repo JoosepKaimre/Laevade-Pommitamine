@@ -1,3 +1,4 @@
+import sys
 import time
 
 import pygame
@@ -38,13 +39,16 @@ def text_objects(text, font):
     return textSurface, textSurface.get_rect()
 
 
-def nupp(tekst, x, y, nl, nk, funktsioon=None):
+def nupp(tekst, x, y, nl, nk, algoritm=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x + nl > mouse[0] > x and y + nk > mouse[1] > y:
         pygame.draw.rect(ekraan, akt, (x, y, nl, nk))
-        if click[0] == 1 and funktsioon != None:
-            funktsioon()
+        if click[0] == 1 and algoritm != None:
+            if tekst == "Välju":
+                välju()
+            else:
+                mäng(algoritm)
     else:
         pygame.draw.rect(ekraan, pas, (x, y, nl, nk))
     smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -127,6 +131,9 @@ def uuendaVastaseLauda(vastase_lauaseis):
                 color = yellow
             elif vastase_lauaseis[j][i] == "X":
                 color = red
+                ####
+            elif vastase_lauaseis[j][i] == "O":
+                color = green
             else:
                 color = blue
             pygame.draw.rect(ekraan, color, (i * 50 + 60, j * 50 + 100, 50, 50), 0)
@@ -161,30 +168,25 @@ def joonistalauad(vastase_lauaseis, kasutaja_lauaseis):
     uuendaKasutajaLauda(kasutaja_lauaseis)
 
 
-def mäng():
+def mäng(algoritm):
     # Joonistame laudade indeksid ja pealkirjad
     joonistaAlgsedLauad()
 
-    # Loome mängija ja AI laudadele vastavad tühjad maatriksid
-    vastase_lauaseis = laua_meetodid.loo_laud(10)
+    # Loome mängijale tühja laua ja AI-le suvaliselt täidetud laua
+    laevad = [5, 4, 3, 3, 2]
+    vastase_lauaseis = laua_meetodid.laud_koos_laevadega(10, laevad)
     kasutaja_lauaseis = laua_meetodid.loo_laud(10)
 
-    # Joonistame mängija ja AI lauadade maatriksite põhjal lauad ise
+    # Joonistame mängija ja AI lauadade maatriksite põhjal lauad GUI-sse
     joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
 
     # Laseme mängijal vajalikud laevad lauale lisada
-    laevad = [5, 4, 3, 3, 2]
     for laev in laevad:
         pygame.event.get()  # Seda läheb vaja, et GUI ei muutuks Not Responding'uks ja joonistaks laevu ühekaupa
         kasutaja_lauaseis = mangu_meetodid.kasutaja_laeva_lisamine(kasutaja_lauaseis, laev)
         # Uuendame kasutaja lauda GUI-s
         uuendaKasutajaLauda(kasutaja_lauaseis)
-
-    #############################################
-    # Siin tuleks genereerida AI laevade asetus #
-    #############################################
-    # vastase_lauseis = genereeriVastaseLaud()
-    # uuendaVastaseLauda(vastase_lauaseis)
+        pygame.event.get()
 
     # Mängu main loop
     while True:
@@ -192,12 +194,18 @@ def mäng():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+        pygame.event.get()
 
         ############################
         # Mängijalt käigu küsimine #
         ############################
-        # vastase_lauaseis = mängijaKäik()
-        uuendaVastaseLauda(vastase_lauaseis)
+        pommitamise_tulemus = 1
+        # Küsime kasutaja käiku korduvalt kui ta sai pihta
+        while pommitamise_tulemus == 1:
+            pygame.event.get()
+            pommitamise_tulemus, vastase_lauaseis = laua_meetodid.kasutaja_pommitamine(vastase_lauaseis)
+            uuendaVastaseLauda(vastase_lauaseis)
+            pygame.event.get()
         if laua_meetodid.mäng_läbi(vastase_lauaseis):
             print("Sinu võit!")
             time.sleep(10)
@@ -206,6 +214,7 @@ def mäng():
         #####################
         # AI käigu tegemine #
         #####################
+        print("Vastase käik")
         # kasutaja_lauaseis = AIKäik()
         uuendaKasutajaLauda(kasutaja_lauaseis)
         if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
@@ -213,4 +222,4 @@ def mäng():
             return
 
 
-mäng()
+mäng("a")
