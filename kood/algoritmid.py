@@ -124,14 +124,15 @@ def tõenäosuslik(laud):
                 if tühjuse_kontroll_veerg(veerg,rida,laev,laud):
                     for i in range(laev):
                         tühi_maatriks[rida+1][veerg] +=1
-    max = -1
+    maks = -1
     rida = -1
     veerg = -1
     for i in range(10):
         for j in range(10):
-            if tühi_maatriks[i][j] > max:
+            if tühi_maatriks[i][j] > maks:
                 rida = i
                 veerg = j
+                maks = tühi_maatriks[i][j]
     return laua_meetodid.pommita(rida,veerg,laud)
                         
                     
