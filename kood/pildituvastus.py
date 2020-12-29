@@ -6,8 +6,6 @@ import numpy as np
 
 def kasutaja_laud_pildilt(pildi_nimi):
     pilt_rgb = cv.imread(os.path.join(os.path.dirname(__file__), "pildid", pildi_nimi))
-    cv.imshow("Pilt", pilt_rgb)
-    cv.waitKey()
     pilt_hall = cv.cvtColor(pilt_rgb, cv.COLOR_BGR2GRAY)
 
     templatede_andmed = [(" ", os.path.join(os.path.dirname(__file__), "pildid", "T.png"), 0.8),
@@ -23,15 +21,6 @@ def kasutaja_laud_pildilt(pildi_nimi):
 
         tulemused = cv.matchTemplate(pilt_hall, sümboli_pilt, cv.TM_CCOEFF_NORMED)
         asukohad = np.where(tulemused >= piir)
-
-        img_rgb_new = pilt_rgb.copy()
-
-        for pt in zip(*asukohad[::-1]):
-            # rectangle(pilt, algusnurk (koordinaadid), lõppnurk, värv (BGR), joone paksus)
-            cv.rectangle(img_rgb_new, pt, (pt[0] + 15, pt[1] + 23), (0, 255, 255), 2)
-
-        cv.imshow("Pilt2", img_rgb_new)
-        cv.waitKey()
 
         for (x, y) in zip(*asukohad[::-1]):
             leitud_sümbolid.append([x, y, sümbol])
@@ -52,8 +41,4 @@ def kasutaja_laud_pildilt(pildi_nimi):
     # Moodustame leitud sümbolitest ühise pika sõne, mille tagastame
     väljund_sõne = "".join(väljund)
 
-    print([list(väljund_sõne[i:i+10]) for i in range(0, 100, 10)])
-    return [list(väljund_sõne[i:i+10]) for i in range(0, 100, 10)]
-
-
-print(kasutaja_laud_pildilt("naidis_laud.png"))
+    return [list(väljund_sõne[i:i + 10]) for i in range(0, 100, 10)]

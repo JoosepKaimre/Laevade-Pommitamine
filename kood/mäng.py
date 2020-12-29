@@ -1,5 +1,4 @@
 import laud as laua_meetodid
-from random import choice
 
 # globaalsed muutujad
 suurus = 10
