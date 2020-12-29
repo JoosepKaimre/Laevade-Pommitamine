@@ -75,10 +75,11 @@ def menüü():
         TextRect.center = ((ekraaniLaius / 2), 100)
         ekraan.blit(TextSurf, TextRect)
 
-        nupp("algoritm1", 300, 250, 150, 50)
-        nupp("algoritm2", 300, 350, 150, 50)
-        nupp("algoritm3", 300, 450, 150, 50)
-        nupp("Välju", 300, 550, 150, 50, välju)
+        nupp("Random", 415, 250, 350, 50,algoritmid.random_käik)
+        nupp("Hunt", 415, 350, 350, 50,algoritmid.hunt_algoritm)
+        nupp("Hunt koos paarsusega", 415, 450, 350, 50,algoritmid.hunt_paarsus_algoritm)
+        nupp("Hunt koos tõenäosusega", 415, 550,350,50,algoritmid.hunt_tõenäosuslik)
+        nupp("Välju", 415, 650, 350, 50, välju)
 
         pygame.display.update()
 
@@ -229,4 +230,4 @@ def mäng(algoritm):
             return
 
 
-mäng(algoritmid.random_käik)
+menüü()
