@@ -120,11 +120,11 @@ def tõenäosuslik(laud):
             for veerg in range(len(laud)+1-laev):
                 if tühjuse_kontroll_rida(rida,veerg,laev,laud):
                     for i in range(laev):
-                        if laud[rida][veerg+i] == " ":
+                        if laud[rida][veerg+i] == " " or laud[rida][veerg+i] == "O":
                             tühi_maatriks[rida][veerg+i] +=1
                 if tühjuse_kontroll_veerg(veerg,rida,laev,laud):
                     for i in range(laev):
-                        if laud[rida][veerg+i] == " ":
+                        if laud[rida+1][veerg] == " " or laud[rida+1][veerg] == "O":
                             tühi_maatriks[rida+1][veerg] +=1
     maks = -1
     rida = -1
