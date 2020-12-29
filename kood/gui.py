@@ -248,8 +248,8 @@ def mäng(algoritm, loeLaudPildilt):
             pygame.event.get()
         if laua_meetodid.mäng_läbi(vastase_lauaseis):
             print("Sinu võit!")
-            time.sleep(10)
-            return
+            input("Vajuta 'Enter', et lõpetada...")
+            välju()
 
         #####################
         # AI käigu tegemine #
@@ -265,7 +265,8 @@ def mäng(algoritm, loeLaudPildilt):
         print("*** Vastane lõpetab käiguga ***")
         if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
             print("Vastase võit!")
-            return
+            input("Vajuta 'Enter', et lõpetada...")
+            välju()
 
 
 menüü()

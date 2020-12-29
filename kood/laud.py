@@ -103,7 +103,7 @@ def laud_koos_laevadega(suurus, laevad):
 
 # Tagastab listi koordinaatide paaridest, millele vastavaid ruute pole veel pommitatud
 def pommitamata_kohad(laud):
-    return [(x, y) for x in range(len(laud)) for y in range(len(laud[x])) if laud[x][y] == " "]
+    return [(x, y) for x in range(len(laud)) for y in range(len(laud[x])) if (laud[x][y] == " " or laud[x][y] == "O")]
 
 
 # Etteantud ruudu pommitamise meetod mängija ja AI jaoks
