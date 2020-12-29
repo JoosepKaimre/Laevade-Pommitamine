@@ -22,6 +22,7 @@ def kõrvuti_ruudud(käik, laud):
         
 
 def random_käik(laud):
+    global viimati_pommitatud
     # seda ilmselt saaks efektiivsemaks teha kui võtta korra pommitamata kohad ja siis eemaldada sealt elemente, mitte iga kord uuesti leida.
     k = laua_meetodid.pommitamata_kohad(laud)
     ruut = choice(k)
