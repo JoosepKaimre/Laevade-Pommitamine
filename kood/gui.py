@@ -5,10 +5,11 @@ import pygame
 import laud as laua_meetodid
 import mäng as mangu_meetodid
 import algoritmid
+import pildituvastus
 
 # ~~~~~~~~~~~~~[suurused]~~~~~~~~~~~~~~~#
 ekraaniLaius = 1180
-ekraaniKõrgus = 750
+ekraaniKõrgus = 650
 ruuduLaius = 50
 ruuduKõrgus = 50
 # ~~~~~~~~~~~~~[menüü]~~~~~~~~~~~~~~~#
@@ -45,11 +46,16 @@ def nupp(tekst, x, y, nl, nk, algoritm=None):
     click = pygame.mouse.get_pressed()
     if x + nl > mouse[0] > x and y + nk > mouse[1] > y:
         pygame.draw.rect(ekraan, akt, (x, y, nl, nk))
-        if click[0] == 1 and algoritm != None:
+        if click[0] == 1 and algoritm is not None:
             if tekst == "Välju":
                 välju()
+            elif tekst == "Käsurealt":
+                mäng(algoritm, False)
+            elif tekst == "Pildilt":
+                mäng(algoritm, True)
             else:
-                mäng(algoritm)
+                time.sleep(0.3)
+                lauaSisestamiseValik(algoritm)
     else:
         pygame.draw.rect(ekraan, pas, (x, y, nl, nk))
     smallText = pygame.font.Font("freesansbold.ttf", 20)
@@ -69,18 +75,36 @@ def menüü():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
+
         ekraan.fill(white)
         largeText = pygame.font.Font('freesansbold.ttf', 50)
         TextSurf, TextRect = text_objects("Laevade pommitamine", largeText)
         TextRect.center = ((ekraaniLaius / 2), 100)
         ekraan.blit(TextSurf, TextRect)
 
-        nupp("Random", 415, 250, 350, 50,algoritmid.random_käik)
-        nupp("Hunt", 415, 350, 350, 50,algoritmid.hunt_algoritm)
-        nupp("Hunt koos paarsusega", 415, 450, 350, 50,algoritmid.hunt_paarsus_algoritm)
-        nupp("Hunt koos tõenäosusega", 415, 550,350,50,algoritmid.hunt_tõenäosuslik)
-        nupp("Välju", 415, 650, 350, 50, välju)
+        nupp("Random", 415, 200, 350, 50, algoritmid.random_käik)
+        nupp("Hunt", 415, 300, 350, 50, algoritmid.hunt_algoritm)
+        nupp("Hunt koos paarsusega", 415, 400, 350, 50, algoritmid.hunt_paarsus_algoritm)
+        nupp("Hunt koos tõenäosusega", 415, 500, 350, 50, algoritmid.hunt_tõenäosuslik)
+        nupp("Välju", 415, 600, 350, 50, välju)
+        pygame.display.update()
 
+
+def lauaSisestamiseValik(algoritm):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        ekraan.fill(white)
+        largeText = pygame.font.Font('freesansbold.ttf', 50)
+        TextSurf, TextRect = text_objects("Vali laua sisestamise meetod", largeText)
+        TextRect.center = ((ekraaniLaius / 2), 100)
+        ekraan.blit(TextSurf, TextRect)
+
+        nupp("Käsurealt", 415, 200, 350, 50, algoritm)
+        nupp("Pildilt", 415, 300, 350, 50, algoritm)
         pygame.display.update()
 
 
@@ -141,6 +165,7 @@ def uuendaVastaseLauda(vastase_lauaseis):
             pygame.draw.rect(ekraan, color, (i * 50 + 60, j * 50 + 100, 50, 50), 0)
             pygame.draw.rect(ekraan, white, (i * 50 + 60, j * 50 + 100, 50, 50), 1)
     pygame.display.update()
+    pygame.event.pump()
 
 
 def uuendaKasutajaLauda(kasutaja_lauaseis):
@@ -163,6 +188,7 @@ def uuendaKasutajaLauda(kasutaja_lauaseis):
             pygame.draw.rect(ekraan, color, (i * 50 + 620, j * 50 + 100, 50, 50), 0)
             pygame.draw.rect(ekraan, white, (i * 50 + 620, j * 50 + 100, 50, 50), 1)
     pygame.display.update()
+    pygame.event.pump()
 
 
 def joonistalauad(vastase_lauaseis, kasutaja_lauaseis):
@@ -170,25 +196,37 @@ def joonistalauad(vastase_lauaseis, kasutaja_lauaseis):
     uuendaKasutajaLauda(kasutaja_lauaseis)
 
 
-def mäng(algoritm):
+def mäng(algoritm, loeLaudPildilt):
     # Joonistame laudade indeksid ja pealkirjad
     joonistaAlgsedLauad()
 
-    # Loome mängijale tühja laua ja AI-le suvaliselt täidetud laua
+    # Loome AI-le suvaliselt täidetud laua ja kasutajale tühja laua
     laevad = [5, 4, 3, 3, 2]
     vastase_lauaseis = laua_meetodid.laud_koos_laevadega(10, laevad)
     kasutaja_lauaseis = laua_meetodid.loo_laud(10)
+    joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
+
+    # Loeme mängija laua sisse kas käsurealt või pildilt
+    kasutaja_lauaseis = []
+    if not loeLaudPildilt:
+        kasutaja_lauaseis = laua_meetodid.loo_laud(10)
+        # Laseme mängijal vajalikud laevad lauale lisada
+        for laev in laevad:
+            pygame.event.get()  # Seda läheb vaja, et GUI ei muutuks Not Responding'uks ja joonistaks laevu ühekaupa
+            kasutaja_lauaseis = mangu_meetodid.kasutaja_laeva_lisamine(kasutaja_lauaseis, laev)
+            # Uuendame kasutaja lauda GUI-s
+            uuendaKasutajaLauda(kasutaja_lauaseis)
+            pygame.event.get()
+    else:
+        try:
+            pildi_nimi = input("Sisestage laua pildi nimi: ")
+            kasutaja_lauaseis = pildituvastus.kasutaja_laud_pildilt(pildi_nimi)
+        except:
+            input("Pildi sisse lugemine ebaõnnestus...")
+            välju()
 
     # Joonistame mängija ja AI lauadade maatriksite põhjal lauad GUI-sse
     joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
-
-    # Laseme mängijal vajalikud laevad lauale lisada
-    for laev in laevad:
-        pygame.event.get()  # Seda läheb vaja, et GUI ei muutuks Not Responding'uks ja joonistaks laevu ühekaupa
-        kasutaja_lauaseis = mangu_meetodid.kasutaja_laeva_lisamine(kasutaja_lauaseis, laev)
-        # Uuendame kasutaja lauda GUI-s
-        uuendaKasutajaLauda(kasutaja_lauaseis)
-        pygame.event.get()
 
     # Mängu main loop
     while True:

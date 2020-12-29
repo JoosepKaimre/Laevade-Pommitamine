@@ -4,7 +4,6 @@
 # "X" tähistab pommitatud laeva ruutu
 
 from random import randint, choice
-import pygame
 import copy
 
 
