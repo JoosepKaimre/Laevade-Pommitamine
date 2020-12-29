@@ -3,7 +3,6 @@ from random import choice, shuffle
 
 global viimati_pommitatud
 
-
 def kõrvuti_ruudud(käik, laud):
     global targad_käigud
     rida = käik[0]
@@ -85,11 +84,11 @@ def paarsus_käik(laud):
             # kui kuskil küljel on pommitatud ruut, siis ta ei vali seda randomiks
             if i > 0 and (laud[i - 1][j] == '-' or laud[i - 1][j] == 'X'):
                 continue
-            if i < len(laud) and (laud[i + 1][j] == '-' or laud[i + 1][j] == 'X'):
+            if i < len(laud) - 1 and (laud[i + 1][j] == '-' or laud[i + 1][j] == 'X'):
                 continue
             if j > 0 and (laud[i][j - 1] == '-' or laud[i][j - 1] == 'X'):
                 continue
-            if j < len(laud) and (laud[i][j + 1] == '-' or laud[i][j + 1] == 'X'):
+            if j < len(laud) - 1 and (laud[i][j + 1] == '-' or laud[i][j + 1] == 'X'):
                 continue
             return laua_meetodid.pommita(i, j, laud)
     # kui ei leidu ruutu, millel poleks mingi naaber pommitamata, siis pommitame viimase vaba ruudu
@@ -122,10 +121,12 @@ def tõenäosuslik(laud):
             for veerg in range(len(laud) + 1 - laev):
                 if tühjuse_kontroll_rida(rida, veerg, laev, laud):
                     for i in range(laev):
-                        tühi_maatriks[rida][veerg + i] += 1
+                        if laud[rida][veerg + i] == " " or laud[rida][veerg + i] == "O":
+                            tühi_maatriks[rida][veerg + i] += 1
                 if tühjuse_kontroll_veerg(veerg, rida, laev, laud):
                     for i in range(laev):
-                        tühi_maatriks[rida + 1][veerg] += 1
+                        if laud[rida + 1][veerg] == " " or laud[rida + 1][veerg] == "O":
+                            tühi_maatriks[rida + 1][veerg] += 1
     maks = -1
     rida = -1
     veerg = -1
@@ -143,7 +144,6 @@ def tühjuse_kontroll_rida(rida, veerg, laev, laud):
         if (laud[rida][veerg + i] == "-"):
             return False
     return True
-
 
 def tühjuse_kontroll_veerg(rida, veerg, laev, laud):
     for i in range(laev):
