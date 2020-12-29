@@ -3,6 +3,7 @@ from random import choice, shuffle
 
 global viimati_pommitatud
 global kaal
+
 def kõrvuti_ruudud(käik, laud):
     global targad_käigud
     rida = käik[0]
@@ -125,12 +126,12 @@ def tõenäosuslik(laud):
                 if tühjuse_kontroll_rida(rida, veerg, laev, laud):
                     for i in range(laev):
                         if laud[rida][veerg + i] == " " or laud[rida][veerg + i] == "O":
-                            tühi_maatriks[rida][veerg + i] += 1
+                            tühi_maatriks[rida][veerg + i] += kaal
                 kaal = 1
                 if tühjuse_kontroll_veerg(veerg, rida, laev, laud):
                     for i in range(laev):
-                        if laud[rida + 1][veerg] == " " or laud[rida + 1][veerg] == "O":
-                            tühi_maatriks[rida + 1][veerg] += 1
+                        if laud[veerg + 1][rida] == " " or laud[veerg + 1][rida] == "O":
+                            tühi_maatriks[veerg + 1][rida] += kaal
     maks = -1
     rida = -1
     veerg = -1
