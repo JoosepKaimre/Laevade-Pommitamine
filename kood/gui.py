@@ -85,7 +85,7 @@ def menüü():
         nupp("Random", 415, 200, 350, 50, algoritmid.random_käik)
         nupp("Hunt", 415, 300, 350, 50, algoritmid.hunt_algoritm)
         nupp("Hunt koos paarsusega", 415, 400, 350, 50, algoritmid.hunt_paarsus_algoritm)
-        nupp("Hunt koos tõenäosusega", 415, 500, 350, 50, algoritmid.hunt_tõenäosuslik)
+        nupp("Tõenäosuslik", 415, 500, 350, 50, algoritmid.tõenäosuslik)
         nupp("Välju", 415, 600, 350, 50, välju)
         pygame.display.update()
 

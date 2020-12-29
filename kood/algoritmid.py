@@ -116,6 +116,7 @@ def hunt_tõenäosuslik(laud):
 
 def tõenäosuslik(laud):
     global kaal
+    global viimati_pommitatud
     tühi_maatriks = [[0] * 10] * 10
     laevad = [5, 4, 3, 3, 2]
     # vasakult paremale kontrollid
@@ -137,10 +138,11 @@ def tõenäosuslik(laud):
     veerg = -1
     for i in range(10):
         for j in range(10):
-            if tühi_maatriks[i][j] > maks:
+            if tühi_maatriks[i][j] > maks and (laud[i][j] == " " or laud[i][j] == "O" ):
                 rida = i
                 veerg = j
                 maks = tühi_maatriks[i][j]
+    viimati_pommitatud = (rida,veerg)
     return laua_meetodid.pommita(rida,veerg,laud)
 
 
