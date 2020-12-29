@@ -2,7 +2,7 @@ import laud as laua_meetodid
 from random import choice, shuffle
 
 global viimati_pommitatud
-
+global kaal
 def kõrvuti_ruudud(käik, laud):
     global targad_käigud
     rida = käik[0]
@@ -112,21 +112,25 @@ def hunt_tõenäosuslik(laud):
 
 
 
+
 def tõenäosuslik(laud):
+    global kaal
     tühi_maatriks = [[0]*10]*10
     laevad = [5,4,3,3,2]
     # vasakult paremale kontrollid
     for laev in laevad:
         for rida in range(len(laud)):
             for veerg in range(len(laud)+1-laev):
+                kaal = 1
                 if tühjuse_kontroll_rida(rida,veerg,laev,laud):
                     for i in range(laev):
                         if laud[rida][veerg+i] == " " or laud[rida][veerg+i] == "O":
-                            tühi_maatriks[rida][veerg+i] +=1
+                            tühi_maatriks[rida][veerg+i] += kaal
+                kaal = 1
                 if tühjuse_kontroll_veerg(veerg,rida,laev,laud):
                     for i in range(laev):
                         if laud[rida+1][veerg] == " " or laud[rida+1][veerg] == "O":
-                            tühi_maatriks[rida+1][veerg] +=1
+                            tühi_maatriks[rida+1][veerg] += kaal
     maks = -1
     rida = -1
     veerg = -1
@@ -141,15 +145,21 @@ def tõenäosuslik(laud):
                     
     
 def tühjuse_kontroll_rida(rida,veerg,laev,laud):
+    global kaal
     for i in range(laev):
         if (laud[rida][veerg+i] == "-"):
             return False
+        if (laud[rida][veerg+i] == "X"):
+            kaal += 10
     return True
 
 def tühjuse_kontroll_veerg(rida,veerg,laev,laud):
+    global kaal
     for i in range(laev):
         if (laud[rida+i][veerg] == "-"):
             return False
+        if (laud[rida+i][veerg] == "X"):
+            kaal += 10
     return True
                     
     
