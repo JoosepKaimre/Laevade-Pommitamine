@@ -26,7 +26,9 @@ def random_käik(laud):
     k = laua_meetodid.pommitamata_kohad(laud)
     ruut = choice(k)
     viimati_pommitatud = ruut
-    return laua_meetodid.pommita(ruut[0], ruut[1], laud)
+    print("Random algoritm: pommitan " + str(ruut))
+    pommitamise_tulemus, lauaseis = laua_meetodid.pommita(ruut[0], ruut[1], laud)
+    return pommitamise_tulemus, lauaseis
 
 
 # algoritm, mis laeva tabamisel otsib lähedusest laevu (ülevalt, alt, kõrvalt, paremalt)
@@ -37,32 +39,40 @@ def hunt_algoritm(laud):
     if len(targad_käigud) != 0:
         shuffle(targad_käigud)
         viimati_pommitatud = targad_käigud.pop()
-        if laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)==1:
+        tulem, laud = laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)
+        if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
+        return tulem, laud
     else:
-        if random_käik(laud)==1:
+        tulem, laud = random_käik(laud)
+        if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
+        return tulem, laud
             
 
 
-# Hunti algoritmi edasiarendus. Siin 
+# Hunti algoritmi edasiarendus. Siin ei kasutata randomit, vaid läbitakse ruute üle ühe
 def hunt_paarsus_algoritm(laud):
     global targad_käigud
     global viimati_pommitatud
     if len(targad_käigud) != 0:
         shuffle(targad_käigud)
         viimati_pommitatud = targad_käigud.pop()
-        if laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)==1:
+        tulem, laud = laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)
+        if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
+        return tulem, laud
     else:
-        if paarsus_käik(laud)==1:
+        tulem, laud = paarsus_käik(laud)
+        if tulem == 1:
             kõrvuti_ruudud(viimati_pommitatud,laud)
             
 def paarsus_käik(laud):
+    #todo
     for i in range(len(laud)):
         for j in range(len(laud)):
+            # siin tuleb teha kontroll, et kõik külgedel olevad ruudud on pommitamata
+            return (0,0),laud
             
             
         
-
-    
