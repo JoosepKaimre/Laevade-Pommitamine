@@ -217,6 +217,8 @@ def mäng(algoritm, loeLaudPildilt):
             # Uuendame kasutaja lauda GUI-s
             uuendaKasutajaLauda(kasutaja_lauaseis)
             pygame.event.get()
+            pygame.display.update()
+            pygame.event.pump()
     else:
         try:
             pildi_nimi = input("Sisestage laua pildi nimi: ")
@@ -227,6 +229,8 @@ def mäng(algoritm, loeLaudPildilt):
 
     # Joonistame mängija ja AI lauadade maatriksite põhjal lauad GUI-sse
     joonistalauad(vastase_lauaseis, kasutaja_lauaseis)
+    pygame.display.update()
+    pygame.event.pump()
 
     # Mängu main loop
     while True:
@@ -246,6 +250,12 @@ def mäng(algoritm, loeLaudPildilt):
             kasutaja_pommitamise_tulemus, vastase_lauaseis = laua_meetodid.kasutaja_pommitamine(vastase_lauaseis)
             uuendaVastaseLauda(vastase_lauaseis)
             pygame.event.get()
+            # See on vajalik, et mäng ka siin lõppeks
+            # (muidu jääb loopi kinni kuni tühjale ruudule käib)
+            if laua_meetodid.mäng_läbi(vastase_lauaseis):
+                print("Sinu võit!")
+                input("Vajuta 'Enter', et lõpetada...")
+                välju()
         if laua_meetodid.mäng_läbi(vastase_lauaseis):
             print("Sinu võit!")
             input("Vajuta 'Enter', et lõpetada...")
@@ -262,6 +272,13 @@ def mäng(algoritm, loeLaudPildilt):
             vastase_pommitamise_tulemus, kasutaja_lauaseis = algoritm(kasutaja_lauaseis)
             uuendaKasutajaLauda(kasutaja_lauaseis)
             pygame.event.get()
+            # See on vajalik, et mäng ka siin lõppeks
+            # (muidu jääb loopi kinni kuni tühjale ruudule käib)
+            if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
+                print("*** Vastane lõpetab käiguga ***")
+                print("Vastase võit!")
+                input("Vajuta 'Enter', et lõpetada...")
+                välju()
         print("*** Vastane lõpetab käiguga ***")
         if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
             print("Vastase võit!")
