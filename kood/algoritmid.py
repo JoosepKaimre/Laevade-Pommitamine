@@ -74,8 +74,10 @@ def hunt_paarsus_algoritm(laud):
 
 def paarsus_käik(laud):
     # todo
+    global viimati_pommitatud
     rida = -1
     veerg = -1
+    sobivad = []
     for i in range(len(laud)):
         for j in range(len(laud)):
             if laud[i][j] == "-" or laud[i][j] == "X":
@@ -92,9 +94,15 @@ def paarsus_käik(laud):
                 continue
             if j < len(laud) - 1 and (laud[i][j + 1] == '-' or laud[i][j + 1] == 'X'):
                 continue
-            return laua_meetodid.pommita(i, j, laud)
+            sobivad.append((i, j))
     # kui ei leidu ruutu, millel poleks mingi naaber pommitamata, siis pommitame viimase vaba ruudu
-    return laua_meetodid.pommita(rida, veerg, laud)
+    if len(sobivad)==0:
+        viimati_pommitatud = (rida,veerg)
+        return laua_meetodid.pommita(rida, veerg, laud)
+    else:
+        viimati_pommitatud = choice(sobivad)
+        return laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)
+        
 
 
 def hunt_tõenäosuslik(laud):
