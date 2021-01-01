@@ -79,14 +79,14 @@ def menüü():
         ekraan.fill(white)
         largeText = pygame.font.Font('freesansbold.ttf', 50)
         TextSurf, TextRect = text_objects("Laevade pommitamine", largeText)
-        TextRect.center = ((ekraaniLaius / 2), 100)
+        TextRect.center = ((ekraaniLaius / 2), 50)
         ekraan.blit(TextSurf, TextRect)
 
-        nupp("Random", 415, 200, 350, 50, algoritmid.random_käik)
-        nupp("Hunt", 415, 300, 350, 50, algoritmid.hunt_algoritm)
-        nupp("Hunt koos paarsusega", 415, 400, 350, 50, algoritmid.hunt_paarsus_algoritm)
-        nupp("Tõenäosuslik", 415, 500, 350, 50, algoritmid.tõenäosuslik)
-        nupp("Välju", 415, 600, 350, 50, välju)
+        nupp("Random", 415, 150, 350, 50, algoritmid.random_käik)
+        nupp("Hunt", 415, 250, 350, 50, algoritmid.hunt_algoritm)
+        nupp("Hunt koos paarsusega", 415, 350, 350, 50, algoritmid.hunt_paarsus_algoritm)
+        nupp("Tõenäosuslik", 415, 450, 350, 50, algoritmid.tõenäosuslik)
+        nupp("Välju", 415, 550, 350, 50, välju)
         pygame.display.update()
 
 
@@ -100,11 +100,11 @@ def lauaSisestamiseValik(algoritm):
         ekraan.fill(white)
         largeText = pygame.font.Font('freesansbold.ttf', 50)
         TextSurf, TextRect = text_objects("Vali laua sisestamise meetod", largeText)
-        TextRect.center = ((ekraaniLaius / 2), 100)
+        TextRect.center = ((ekraaniLaius / 2), 50)
         ekraan.blit(TextSurf, TextRect)
 
-        nupp("Käsurealt", 415, 200, 350, 50, algoritm)
-        nupp("Pildilt", 415, 300, 350, 50, algoritm)
+        nupp("Käsurealt", 415, 150, 350, 50, algoritm)
+        nupp("Pildilt", 415, 250, 350, 50, algoritm)
         pygame.display.update()
 
 
