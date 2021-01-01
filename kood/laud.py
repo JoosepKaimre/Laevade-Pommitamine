@@ -115,17 +115,17 @@ def pommita(rida, veerg, laud):
         sümbol = laud[rida][veerg]
         if sümbol == " ":
             laud[rida][veerg] = "-"
-            print("Seal ruudul ei olnud laeva")
+            print("* Seal ruudul ei olnud laeva!")
             return 0, laud
         elif sümbol == "O":
-            print("Tabati laeva")
+            print("* Tabati laeva!")
             laud[rida][veerg] = "X"
             return 1, laud
         else:
-            print("Seda kohta on juba pommitatud! Proovige uuesti...")
+            print("* Seda kohta on juba pommitatud! Proovige uuesti...")
             return -1, laud
     except LaevadePommitamiseException:
-        print("Laual pole selliseid kohti")
+        print("* Laual pole selliseid kohti!")
         return -1, laud
 
 
@@ -137,8 +137,11 @@ def kasutaja_pommitamine(laud):
         while rida not in range(10) or veerg not in range(10):
             tulemus = input("Sisesta palun pommitatav ruut (kujul A0, A1 jne): ")
             try:
-                rida = tahed.index(tulemus[0].upper())
-                veerg = int(tulemus[1])
+                if len(tulemus) == 2:
+                    rida = tahed.index(tulemus[0].upper())
+                    veerg = int(tulemus[1])
+                else:
+                    raise LaevadePommitamiseException
             except:
                 print("Sisestasite ruudu koordinaadid valel kujul! Proovige uuesti...")
         pommitamise_tulemus, lauaseis = pommita(rida, veerg, laud)

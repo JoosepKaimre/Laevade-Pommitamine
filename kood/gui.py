@@ -219,10 +219,12 @@ def mäng(algoritm, loeLaudPildilt):
             pygame.event.get()
             pygame.display.update()
             pygame.event.pump()
+        print()
     else:
         try:
             pildi_nimi = input("Sisestage laua pildi nimi: ")
             kasutaja_lauaseis = pildituvastus.kasutaja_laud_pildilt(pildi_nimi)
+            print()
         except:
             input("Pildi sisse lugemine ebaõnnestus...")
             välju()
@@ -253,10 +255,12 @@ def mäng(algoritm, loeLaudPildilt):
             # See on vajalik, et mäng ka siin lõppeks
             # (muidu jääb loopi kinni kuni tühjale ruudule käib)
             if laua_meetodid.mäng_läbi(vastase_lauaseis):
+                print()
                 print("Sinu võit!")
                 input("Vajuta 'Enter', et lõpetada...")
                 välju()
         if laua_meetodid.mäng_läbi(vastase_lauaseis):
+            print()
             print("Sinu võit!")
             input("Vajuta 'Enter', et lõpetada...")
             välju()
@@ -264,7 +268,7 @@ def mäng(algoritm, loeLaudPildilt):
         #####################
         # AI käigu tegemine #
         #####################
-        print("*** Vastane alustab käiguga ***")
+        print("\n--- Vastase käik ---")
         vastase_pommitamise_tulemus = 1
         # Laseme AI-l korduvalt käike teha kui ta sai kasutaja laevadele pihta
         while vastase_pommitamise_tulemus == 1:
@@ -275,15 +279,16 @@ def mäng(algoritm, loeLaudPildilt):
             # See on vajalik, et mäng ka siin lõppeks
             # (muidu jääb loopi kinni kuni tühjale ruudule käib)
             if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
-                print("*** Vastane lõpetab käiguga ***")
+                print()
                 print("Vastase võit!")
                 input("Vajuta 'Enter', et lõpetada...")
                 välju()
-        print("*** Vastane lõpetab käiguga ***")
         if laua_meetodid.mäng_läbi(kasutaja_lauaseis):
+            print()
             print("Vastase võit!")
             input("Vajuta 'Enter', et lõpetada...")
             välju()
+        print()
 
 
 menüü()

@@ -4,6 +4,7 @@ from random import choice, shuffle
 global viimati_pommitatud
 global kaal
 
+
 def kõrvuti_ruudud(käik, laud):
     global targad_käigud
     rida = käik[0]
@@ -28,7 +29,6 @@ def random_käik(laud):
     k = laua_meetodid.pommitamata_kohad(laud)
     ruut = choice(k)
     viimati_pommitatud = ruut
-    print("Random algoritm: pommitan " + str(ruut))
     pommitamise_tulemus, lauaseis = laua_meetodid.pommita(ruut[0], ruut[1], laud)
     return pommitamise_tulemus, lauaseis
 
@@ -96,13 +96,12 @@ def paarsus_käik(laud):
                 continue
             sobivad.append((i, j))
     # kui ei leidu ruutu, millel poleks mingi naaber pommitamata, siis pommitame viimase vaba ruudu
-    if len(sobivad)==0:
-        viimati_pommitatud = (rida,veerg)
+    if len(sobivad) == 0:
+        viimati_pommitatud = (rida, veerg)
         return laua_meetodid.pommita(rida, veerg, laud)
     else:
         viimati_pommitatud = choice(sobivad)
-        return laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)
-        
+        return laua_meetodid.pommita(viimati_pommitatud[0], viimati_pommitatud[1], laud)
 
 
 def hunt_tõenäosuslik(laud):
@@ -145,14 +144,14 @@ def tõenäosuslik(laud):
     sobivad = []
     for i in range(10):
         for j in range(10):
-            if tühi_maatriks[i][j] > maks and (laud[i][j] == " " or laud[i][j] == "O" ):
+            if tühi_maatriks[i][j] > maks and (laud[i][j] == " " or laud[i][j] == "O"):
                 sobivad = []
-                sobivad.append((i,j))
+                sobivad.append((i, j))
                 maks = tühi_maatriks[i][j]
-            elif tühi_maatriks[i][j] == maks  and (laud[i][j] == " " or laud[i][j] == "O" ):
-                sobivad.append((i,j))  
+            elif tühi_maatriks[i][j] == maks and (laud[i][j] == " " or laud[i][j] == "O"):
+                sobivad.append((i, j))
     viimati_pommitatud = choice(sobivad)
-    return laua_meetodid.pommita(viimati_pommitatud[0],viimati_pommitatud[1],laud)
+    return laua_meetodid.pommita(viimati_pommitatud[0], viimati_pommitatud[1], laud)
 
 
 def tühjuse_kontroll_rida(rida, veerg, laev, laud):
@@ -160,15 +159,16 @@ def tühjuse_kontroll_rida(rida, veerg, laev, laud):
     for i in range(laev):
         if (laud[rida][veerg + i] == "-"):
             return False
-        if (laud[rida][veerg+i] == "X"):
+        if (laud[rida][veerg + i] == "X"):
             kaal += 10
     return True
 
-def tühjuse_kontroll_veerg(rida,veerg,laev,laud):
+
+def tühjuse_kontroll_veerg(rida, veerg, laev, laud):
     global kaal
     for i in range(laev):
         if (laud[rida + i][veerg] == "-"):
             return False
-        if (laud[rida+i][veerg] == "X"):
+        if (laud[rida + i][veerg] == "X"):
             kaal += 10
     return True
