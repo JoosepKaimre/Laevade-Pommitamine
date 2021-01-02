@@ -242,6 +242,7 @@ def mäng(algoritm, loeLaudPildilt):
         ############################
         # Mängijalt käigu küsimine #
         ############################
+        print("\n--- Sinu käik ---")
         kasutaja_pommitamise_tulemus = 1
         # Laseme kasutajal korduvalt käike teha kui ta sai AI laevadele pihta
         while kasutaja_pommitamise_tulemus == 1:
