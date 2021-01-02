@@ -157,9 +157,6 @@ def uuendaVastaseLauda(vastase_lauaseis):
                 color = yellow
             elif vastase_lauaseis[j][i] == "X":
                 color = red
-                ####
-            elif vastase_lauaseis[j][i] == "O":
-                color = green
             else:
                 color = blue
             pygame.draw.rect(ekraan, color, (i * 50 + 60, j * 50 + 100, 50, 50), 0)
