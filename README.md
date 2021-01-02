@@ -3,14 +3,14 @@ Töö eesmärgiks oli luua laevade pommitamise mäng ning seda mängiv tehisinte
 
 ## Juhised
 Selleks, et meie programm töötaks, tuleks kõigepealt installida *pygame*, *numpy* ning *opencv-python*. Seda saab teha näiteks järgnevate käskude abil:
-* pip install pygame
-* pip install numpy
-* pip install opencv-python
+* *pip install pygame*
+* *pip install numpy*
+* *pip install opencv-python*
 
 Sammud programmi jooksutamiseks:
 1.Navigeeru käsureal kataloogi, kus asuvad koodifailid
 
-2.Käivita programmi GUI näiteks käsuga python3 gui.py. 
+2.Käivita programmi GUI näiteks käsuga *python3 gui.py*. 
 
 3.Vali nupuvajutuse abil algoritm, mille vastu mängida. 
 
@@ -19,7 +19,7 @@ Sammud programmi jooksutamiseks:
 * Käsurealt
     * Käsurida küsib sinult järjest, mis ilmakaare suunas ning alates mis koordinaatidest laeva lisada. Vasta neile küsimustele vastavalt juhistele.
 * Pildituvastusega
-    * Ava fail Kasutaja_laua_tabel.docx ning järgi failisiseseid juhiseid.
+    * Ava fail *Kasutaja_laua_tabel.docx* ning järgi failisiseseid juhiseid.
     * Sisesta loodud pildifaili nimi käsureal esineva küsimuse vastuseks.
     
 5.Vasta käsureal esinevatele küsimustele, mis küsivad, mis ruute soovid pommitada.
